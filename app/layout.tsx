@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBottomBar } from "@/components/layout/MobileBottomBar";
+import { InitialLoader } from "@/components/layout/InitialLoader";
 import { businessConfig } from "@/config/business";
 import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
@@ -37,6 +38,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-transparent text-ink relative`} suppressHydrationWarning>
         <NextTopLoader color="#2563eb" showSpinner={false} />
+        <InitialLoader />
         {/* Global Ambient Background for Glassmorphism */}
         <div className="fixed inset-0 -z-50 bg-[#f8fafc]">
           <div className="absolute -left-[10%] -top-[10%] h-[50vw] w-[50vw] rounded-full bg-blue-300/[0.15] blur-[120px]" />
