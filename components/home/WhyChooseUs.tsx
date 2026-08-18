@@ -20,19 +20,21 @@ export function WhyChooseUs() {
 
       <div className="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
         <FadeIn className="relative">
-          <div className="relative lg:sticky lg:top-28 mx-auto flex aspect-[4/5] w-full max-w-md items-center justify-center overflow-hidden rounded-3xl border border-surface-border/60 bg-surface shadow-xl shadow-accent/10 group">
-            <Image
-              src="/images/quality_repair_tools.jpg"
-              alt="High quality professional repair tools"
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-40" />
+          <div className="mx-auto w-full max-w-md lg:sticky lg:top-28">
+            <div className="relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-3xl border border-surface-border/60 bg-surface shadow-xl shadow-accent/10 group">
+              <Image
+                src="/images/quality_repair_tools.jpg"
+                alt="High quality professional repair tools"
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-40" />
 
-            <div className="absolute bottom-6 left-6 rounded-2xl border border-white/40 bg-white/30 px-5 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-xl">
-              <p className="font-display text-[10px] font-bold uppercase tracking-widest text-white/90">Warranty</p>
-              <p className="font-display text-base font-bold text-white">Active — 12 months</p>
+              <div className="absolute bottom-6 left-6 rounded-2xl border border-white/40 bg-white/30 px-5 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-xl">
+                <p className="font-display text-[10px] font-bold uppercase tracking-widest text-white/90">Warranty</p>
+                <p className="font-display text-base font-bold text-white">Active — 12 months</p>
+              </div>
             </div>
           </div>
         </FadeIn>
