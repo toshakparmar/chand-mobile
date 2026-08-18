@@ -10,6 +10,9 @@ export function InitialLoader() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    // Lock scroll during loading so users don't see unrendered sections
+    document.body.style.overflow = "hidden";
+
     // Increment progress counter
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -17,18 +20,20 @@ export function InitialLoader() {
           clearInterval(interval);
           return 100;
         }
-        const diff = Math.floor(Math.random() * 20) + 10;
+        const diff = Math.floor(Math.random() * 25) + 15;
         return Math.min(prev + diff, 100);
       });
-    }, 100);
+    }, 90);
 
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1400);
+      document.body.style.overflow = "";
+    }, 1300);
 
     return () => {
       clearInterval(interval);
       clearTimeout(timer);
+      document.body.style.overflow = "";
     };
   }, []);
 
