@@ -46,7 +46,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section id="home" className="relative overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40 bg-[#f8fafc]">
+    <section id="home" className="relative overflow-hidden pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pt-32 bg-[#f8fafc]">
       {/* Grid backdrop */}
       <GridPattern
         width={40}
@@ -69,7 +69,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/40 px-5 py-2 backdrop-blur-md shadow-sm"
+            className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/40 px-4 py-1.5 backdrop-blur-md shadow-sm"
           >
             <ShieldCheck className="h-4 w-4 text-blue-600" />
             <span className="font-display text-xs font-bold uppercase tracking-[0.2em] text-slate-800">
@@ -91,7 +91,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-6 max-w-lg text-lg leading-relaxed text-slate-600 sm:text-xl font-medium"
+            className="mt-4 max-w-lg text-base leading-relaxed text-slate-600 sm:text-lg lg:text-xl font-medium"
           >
             Expert technicians, genuine parts, and lightning-fast turnarounds. We bring your essential tech back to life.
           </motion.p>
@@ -100,7 +100,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="mt-10 flex flex-wrap items-center gap-4"
+            className="mt-7 flex flex-wrap items-center gap-4"
           >
             <BookingDialog
               trigger={
@@ -123,7 +123,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7, delay: 0.5 }}
-            className="mt-14 flex items-center gap-6"
+            className="mt-8 flex items-center gap-5 sm:mt-10"
           >
             <div className="flex -space-x-4">
               {[1, 2, 3, 4].map((i) => (
