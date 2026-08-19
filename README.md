@@ -73,3 +73,7 @@ Pricing data for the estimator can be updated inside `lib/repairPricing.ts`.
 ## 📄 License
 
 This project is proprietary and confidential.
+
+## 🙏 Acknowledgments
+
+Built with ❤️ by the Chand Mobile Repair Team.
