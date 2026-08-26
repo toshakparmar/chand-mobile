@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2, Sparkles, ShieldCheck, Zap, Clock, MessageCircle, Phone } from "lucide-react";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -17,6 +17,8 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { services } from "@/lib/data";
+import { businessConfig, waLink, telLink } from "@/config/business";
+import { toast } from "sonner";
 
 type FormState = {
   name: string;
@@ -26,6 +28,7 @@ type FormState = {
   model: string;
   repairType: string;
   date: string;
+  timeSlot: string;
   message: string;
 };
 
@@ -37,6 +40,7 @@ const initialState: FormState = {
   model: "",
   repairType: "",
   date: "",
+  timeSlot: "Morning (10:00 AM - 1:00 PM)",
   message: "",
 };
 
@@ -67,120 +71,223 @@ export default function BookRepairPage() {
     setStatus("submitting");
     await new Promise((r) => setTimeout(r, 1100));
     setStatus("success");
+    toast.success("Priority repair slot reserved!", {
+      description: `We'll call ${form.phone} shortly to confirm your booking.`,
+    });
   }
 
   return (
-    <div className="pt-32 pb-24 sm:pt-40 sm:pb-32">
-      <div className="mx-auto max-w-2xl px-5 sm:px-8">
-        <FadeIn className="text-center">
-          <Badge>Book a Repair</Badge>
-          <h1 className="mt-4 text-balance font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-            Tell us what&apos;s wrong.
+    <div className="pt-28 pb-20 sm:pt-36 sm:pb-28">
+      {/* Background ambient lighting */}
+      <div className="fixed inset-0 -z-50 bg-[#f8fafc]">
+        <div className="absolute -left-[10%] -top-[10%] h-[50vw] w-[50vw] rounded-full bg-blue-300/[0.12] blur-[140px]" />
+        <div className="absolute -right-[10%] -bottom-[10%] h-[50vw] w-[50vw] rounded-full bg-emerald-300/[0.1] blur-[140px]" />
+      </div>
+
+      <div className="mx-auto max-w-4xl px-5 sm:px-8">
+        <FadeIn className="text-center max-w-2xl mx-auto">
+          <Badge
+            variant="outline"
+            className="mb-5 bg-white/80 border-blue-200/80 text-blue-600 px-4 py-1.5 shadow-sm backdrop-blur-md"
+          >
+            <Sparkles className="h-3.5 w-3.5 mr-2 text-blue-600" />
+            <span className="font-semibold text-slate-800">Priority Service Booking</span>
+          </Badge>
+
+          <h1 className="font-display text-4xl sm:text-6xl font-bold tracking-tight text-slate-950 leading-[1.1]">
+            Schedule your repair. <br />
+            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 bg-clip-text text-transparent drop-shadow-sm">
+              Skip the queue.
+            </span>
           </h1>
-          <p className="mt-4 text-muted">
-            We&apos;ll confirm transparent pricing before any work begins.
+
+          <p className="mt-5 text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
+            Reserve your technician appointment ahead of time for express same-day turnaround.
           </p>
+
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm font-semibold text-slate-700">
+            <span className="flex items-center gap-1.5">
+              <ShieldCheck className="h-4 w-4 text-emerald-600" />
+              1-Year Warranty
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Clock className="h-4 w-4 text-blue-600" />
+              15-Min Free Diagnosis
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Zap className="h-4 w-4 text-amber-500" />
+              No Fix, No Fee
+            </span>
+          </div>
         </FadeIn>
 
-        <FadeIn delay={0.1} className="mt-12 rounded-3xl border border-surface-border bg-surface/50 p-6 sm:p-10">
-          <AnimatePresence mode="wait">
+        {/* Booking Card */}
+        <FadeIn delay={0.15} className="mt-10 sm:mt-14">
+          <div className="rounded-[2.5rem] border border-slate-200/90 bg-white/80 p-6 sm:p-10 lg:p-12 shadow-[0_16px_50px_rgba(0,0,0,0.04)] backdrop-blur-2xl">
             {status === "success" ? (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col items-center gap-4 py-10 text-center"
-              >
-                <CheckCircle2 className="h-14 w-14 text-ok" />
-                <h2 className="font-display text-2xl text-ink">Repair request received!</h2>
-                <p className="max-w-sm text-muted">
-                  We&apos;ll text and call {form.phone || "you"} shortly to confirm your slot
-                  and give you a final quote.
+              <div className="py-12 text-center">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 mb-4">
+                  <CheckCircle2 className="h-8 w-8" />
+                </div>
+                <h3 className="font-display text-2xl font-bold text-slate-950">
+                  Appointment Reserved Successfully!
+                </h3>
+                <p className="mt-2 text-sm text-slate-600 max-w-md mx-auto">
+                  Thank you, <strong>{form.name}</strong>. Our service advisor will call{" "}
+                  <strong>{form.phone}</strong> to confirm your slot for {form.brand} {form.model}.
                 </p>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setStatus("idle");
-                    setForm(initialState);
-                  }}
-                >
-                  Book Another Repair
-                </Button>
-              </motion.div>
+                <div className="mt-8 flex flex-wrap justify-center gap-3">
+                  <button
+                    onClick={() => {
+                      setStatus("idle");
+                      setForm(initialState);
+                    }}
+                    className="rounded-2xl border border-slate-200 bg-white px-6 py-2.5 text-xs font-bold text-slate-800 hover:bg-slate-50"
+                  >
+                    Book Another Device
+                  </button>
+                  <a
+                    href={waLink(`Hi Chand Mobile, I just submitted an online repair booking for my ${form.brand} ${form.model}.`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-emerald-700"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    <span>Confirm on WhatsApp</span>
+                  </a>
+                </div>
+              </div>
             ) : (
-              <motion.form
-                key="form"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onSubmit={handleSubmit}
-                className="space-y-5"
-              >
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                   <div>
-                    <Label htmlFor="name">Full Name</Label>
-                    <Input id="name" value={form.name} onChange={(e) => update("name", e.target.value)} placeholder="Aarav Mehta" />
-                    {errors.name && <p className="mt-1 text-xs text-signal">{errors.name}</p>}
+                    <Label htmlFor="name" className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                      Full Name
+                    </Label>
+                    <Input
+                      id="name"
+                      value={form.name}
+                      onChange={(e) => update("name", e.target.value)}
+                      placeholder="e.g. Rahul Sharma"
+                      className="mt-1.5 h-12 rounded-2xl border-slate-200/90 bg-slate-50/60"
+                    />
+                    {errors.name && <p className="mt-1 text-xs text-rose-500 font-medium">{errors.name}</p>}
                   </div>
+
                   <div>
-                    <Label htmlFor="phone">Phone</Label>
-                    <Input id="phone" value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+91 98765 43210" />
-                    {errors.phone && <p className="mt-1 text-xs text-signal">{errors.phone}</p>}
+                    <Label htmlFor="phone" className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                      Phone Number
+                    </Label>
+                    <Input
+                      id="phone"
+                      value={form.phone}
+                      onChange={(e) => update("phone", e.target.value)}
+                      placeholder="+91 98765 43210"
+                      className="mt-1.5 h-12 rounded-2xl border-slate-200/90 bg-slate-50/60"
+                    />
+                    {errors.phone && <p className="mt-1 text-xs text-rose-500 font-medium">{errors.phone}</p>}
                   </div>
                 </div>
 
-                <div>
-                  <Label htmlFor="email">Email (optional)</Label>
-                  <Input id="email" type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="you@email.com" />
-                  {errors.email && <p className="mt-1 text-xs text-signal">{errors.email}</p>}
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  <div>
+                    <Label htmlFor="brand" className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                      Device Brand
+                    </Label>
+                    <Input
+                      id="brand"
+                      value={form.brand}
+                      onChange={(e) => update("brand", e.target.value)}
+                      placeholder="e.g. Apple, Samsung, OnePlus"
+                      className="mt-1.5 h-12 rounded-2xl border-slate-200/90 bg-slate-50/60"
+                    />
+                    {errors.brand && <p className="mt-1 text-xs text-rose-500 font-medium">{errors.brand}</p>}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="model" className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                      Device Model
+                    </Label>
+                    <Input
+                      id="model"
+                      value={form.model}
+                      onChange={(e) => update("model", e.target.value)}
+                      placeholder="e.g. iPhone 15 Pro, S24 Ultra"
+                      className="mt-1.5 h-12 rounded-2xl border-slate-200/90 bg-slate-50/60"
+                    />
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                   <div>
-                    <Label htmlFor="brand">Device Brand</Label>
-                    <Input id="brand" value={form.brand} onChange={(e) => update("brand", e.target.value)} placeholder="Apple" />
-                    {errors.brand && <p className="mt-1 text-xs text-signal">{errors.brand}</p>}
-                  </div>
-                  <div>
-                    <Label htmlFor="model">Device Model</Label>
-                    <Input id="model" value={form.model} onChange={(e) => update("model", e.target.value)} placeholder="iPhone 15 Pro" />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  <div>
-                    <Label>Repair Type</Label>
-                    <Select value={form.repairType} onValueChange={(v) => update("repairType", v)}>
-                      <SelectTrigger><SelectValue placeholder="Select repair" /></SelectTrigger>
-                      <SelectContent>
+                    <Label className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                      Repair Issue
+                    </Label>
+                    <Select
+                      value={form.repairType}
+                      onValueChange={(v) => update("repairType", v)}
+                    >
+                      <SelectTrigger className="mt-1.5 h-12 rounded-2xl border-slate-200/90 bg-slate-50/60 font-semibold text-slate-800">
+                        <SelectValue placeholder="Select repair required" />
+                      </SelectTrigger>
+                      <SelectContent className="rounded-2xl border-slate-200 bg-white shadow-xl">
                         {services.map((s) => (
-                          <SelectItem key={s.slug} value={s.name}>{s.name}</SelectItem>
+                          <SelectItem key={s.slug} value={s.name}>
+                            {s.name}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
-                    {errors.repairType && <p className="mt-1 text-xs text-signal">{errors.repairType}</p>}
+                    {errors.repairType && (
+                      <p className="mt-1 text-xs text-rose-500 font-medium">{errors.repairType}</p>
+                    )}
                   </div>
+
                   <div>
-                    <Label htmlFor="date">Preferred Date</Label>
-                    <Input id="date" type="date" value={form.date} onChange={(e) => update("date", e.target.value)} />
+                    <Label htmlFor="date" className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                      Preferred Date
+                    </Label>
+                    <Input
+                      id="date"
+                      type="date"
+                      value={form.date}
+                      onChange={(e) => update("date", e.target.value)}
+                      className="mt-1.5 h-12 rounded-2xl border-slate-200/90 bg-slate-50/60 font-semibold"
+                    />
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="message">Message (optional)</Label>
-                  <Textarea id="message" value={form.message} onChange={(e) => update("message", e.target.value)} placeholder="Anything else we should know?" />
+                  <Label htmlFor="message" className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                    Additional Notes (Optional)
+                  </Label>
+                  <Textarea
+                    id="message"
+                    rows={3}
+                    value={form.message}
+                    onChange={(e) => update("message", e.target.value)}
+                    placeholder="Describe any other symptoms (e.g. water exposure, touch stutter, battery draining fast)..."
+                    className="mt-1.5 rounded-2xl border-slate-200/90 bg-slate-50/60 text-sm"
+                  />
                 </div>
 
-                <Button type="submit" className="w-full" size="lg" disabled={status === "submitting"}>
+                <Button
+                  type="submit"
+                  disabled={status === "submitting"}
+                  className="w-full h-14 rounded-2xl text-base font-bold bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-600/25 transition-all hover:scale-[1.01] active:scale-95"
+                >
                   {status === "submitting" ? (
-                    <><Loader2 className="h-4 w-4 animate-spin" /> Sending Request…</>
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                      Reserving Priority Slot…
+                    </>
                   ) : (
-                    "Request Repair"
+                    "Confirm Priority Repair Booking"
                   )}
                 </Button>
-              </motion.form>
+              </form>
             )}
-          </AnimatePresence>
+          </div>
         </FadeIn>
       </div>
     </div>

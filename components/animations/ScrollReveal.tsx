@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { forwardRef } from "react";
+import { motion, type HTMLMotionProps, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 
 const container: Variants = {
@@ -19,36 +20,32 @@ const item: Variants = {
   },
 };
 
-export function StaggerGroup({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "100px 0px 0px 0px", amount: "some" }}
-      variants={container}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
+export const StaggerGroup = forwardRef<HTMLDivElement, HTMLMotionProps<"div">>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <motion.div
+        ref={ref}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "100px 0px 0px 0px", amount: "some" }}
+        variants={container}
+        className={className}
+        {...props}
+      >
+        {children}
+      </motion.div>
+    );
+  }
+);
+StaggerGroup.displayName = "StaggerGroup";
 
-export function StaggerItem({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <motion.div variants={item} className={className}>
-      {children}
-    </motion.div>
-  );
-}
+export const StaggerItem = forwardRef<HTMLDivElement, HTMLMotionProps<"div">>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <motion.div ref={ref} variants={item} className={className} {...props}>
+        {children}
+      </motion.div>
+    );
+  }
+);
+StaggerItem.displayName = "StaggerItem";

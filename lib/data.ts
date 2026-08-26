@@ -1,5 +1,10 @@
 import {
   Smartphone,
+  ScanEye,
+  FileCheck,
+  Wrench,
+  ShieldCheck,
+  Sparkles,
   BatteryCharging,
   Plug,
   Camera,
@@ -187,7 +192,7 @@ export const testimonials = [
     device: "OnePlus 11",
     rating: 5,
     review:
-      "Dropped my phone in water and thought it was gone for good. FixPro brought it back to life, camera and all.",
+      "Dropped my phone in water and thought it was gone for good. Chand Mobile brought it back to life, camera and all.",
   },
   {
     name: "Priya Nair",
@@ -258,4 +263,182 @@ export const stats = [
   { value: "4.9/5", label: "Customer Rating" },
   { value: "98%", label: "Customer Satisfaction" },
   { value: "1 Year", label: "Repair Warranty" },
+];
+
+
+export const stepDetails = [
+  {
+    step: "01",
+    number: 1,
+    tag: "INTAKE & SCHEDULING",
+    title: "Book Your Repair",
+    subtitle: "Instant Online Booking & Doorstep Pickup",
+    icon: Smartphone,
+    color: "from-blue-600 to-indigo-600",
+    badgeBg: "bg-blue-50 text-blue-700 border-blue-200/60",
+    description:
+      "Select your phone brand, model, and the fault you're facing. Get an instant confirmation slot without waiting in line.",
+    keyTakeaway: "Zero wait times — doorstep pickup or express walk-in priority.",
+    benefits: [
+      {
+        head: "Instant Slot Reservation",
+        desc: "Confirm your appointment immediately via WhatsApp or web form.",
+      },
+      {
+        head: "Doorstep or In-Store",
+        desc: "Choose between free local pickup or 1-on-1 desk intake at our shop.",
+      },
+      {
+        head: "Pre-Repair Checklist",
+        desc: "Full device checklist recorded so your SIM and accessories remain safe.",
+      },
+    ],
+    time: "2 Minutes",
+    warranty: "Pre-Booking Protected",
+  },
+  {
+    step: "02",
+    number: 2,
+    tag: "HARDWARE AUDIT",
+    title: "Free Diagnosis",
+    subtitle: "Precision Multi-Point Fault Inspection",
+    icon: ScanEye,
+    color: "from-indigo-600 to-purple-600",
+    badgeBg: "bg-indigo-50 text-indigo-700 border-indigo-200/60",
+    description:
+      "Our certified repair engineers run bench diagnostics and microscopic hardware checks to uncover the true root cause before opening the phone.",
+    keyTakeaway: "100% Free diagnosis with strict personal data privacy protection.",
+    benefits: [
+      {
+        head: "Zero Cost, Zero Obligation",
+        desc: "No diagnostic charges, even if you decide not to proceed with the repair.",
+      },
+      {
+        head: "Component Level Testing",
+        desc: "Full evaluation of screen digitizer, battery IC, cameras, and audio codecs.",
+      },
+      {
+        head: "Total Data Privacy",
+        desc: "Strict no-access policy on personal photos, messages, and accounts.",
+      },
+    ],
+    time: "10–15 Minutes",
+    warranty: "100% Free Test",
+  },
+  {
+    step: "03",
+    number: 3,
+    tag: "HONEST ESTIMATION",
+    title: "Transparent Quote",
+    subtitle: "Upfront All-Inclusive Pricing with Price-Match",
+    icon: FileCheck,
+    color: "from-violet-600 to-pink-600",
+    badgeBg: "bg-purple-50 text-purple-700 border-purple-200/60",
+    description:
+      "Receive a clear, written breakdown of parts and labor costs upfront. We explain original vs OEM options with no hidden fees.",
+    keyTakeaway: "Fixed all-inclusive price — you only pay once the device is fixed.",
+    benefits: [
+      {
+        head: "Itemized Cost Breakdown",
+        desc: "Clear separation of replacement part cost and certified technician labor.",
+      },
+      {
+        head: "Original & OEM Choices",
+        desc: "Choose genuine OEM-spec components that fit your exact budget.",
+      },
+      {
+        head: "Explicit Work Approval",
+        desc: "No repair work begins until you have reviewed and approved the quote.",
+      },
+    ],
+    time: "Immediate",
+    warranty: "Price Guarantee",
+  },
+  {
+    step: "04",
+    number: 4,
+    tag: "PRECISION WORKBENCH",
+    title: "Master Repair",
+    subtitle: "Grade-A Parts & Micro-Soldering Specialists",
+    icon: Wrench,
+    color: "from-blue-600 to-cyan-600",
+    badgeBg: "bg-cyan-50 text-cyan-700 border-cyan-200/60",
+    description:
+      "Our senior technician completes the repair in a certified ESD-safe environment using temperature-controlled micro-soldering and calibrated press molds.",
+    keyTakeaway: "90% of screen and battery repairs finished in under 45 minutes.",
+    benefits: [
+      {
+        head: "Grade-A Components",
+        desc: "Factory-calibrated displays, high-density batteries, and OEM ports.",
+      },
+      {
+        head: "Clean ESD Workstations",
+        desc: "Electrostatic discharge protected benches prevent internal IC damage.",
+      },
+      {
+        head: "Water-Resistance Resealing",
+        desc: "New adhesive gaskets installed to preserve factory ingress protection.",
+      },
+    ],
+    time: "20–45 Minutes",
+    warranty: "Grade-A Parts",
+  },
+  {
+    step: "05",
+    number: 5,
+    tag: "QUALITY ASSURANCE",
+    title: "Quality Testing",
+    subtitle: "Rigorous Functional Bench & Stress Testing",
+    icon: ShieldCheck,
+    color: "from-teal-600 to-emerald-600",
+    badgeBg: "bg-emerald-50 text-emerald-700 border-emerald-200/60",
+    description:
+      "Every repaired phone undergoes a comprehensive 20-point audit verifying touchscreen smoothness, biometric sensors, charging speeds, thermal profiles, and cameras.",
+    keyTakeaway: "Comprehensive testing before issuing your 1-Year warranty certificate.",
+    benefits: [
+      {
+        head: "20-Point Functional Test",
+        desc: "Audit covers display, Face ID/Fingerprint, mic, earpiece, and antennas.",
+      },
+      {
+        head: "Thermal & Charging Test",
+        desc: "Verified fast charging curve and heat dissipation benchmarks.",
+      },
+      {
+        head: "Warranty Registration",
+        desc: "1-Year replacement warranty certificate officially issued to your account.",
+      },
+    ],
+    time: "10 Minutes",
+    warranty: "1-Year Certified",
+  },
+  {
+    step: "06",
+    number: 6,
+    tag: "HANDOVER & CARE",
+    title: "Pick Up & Enjoy",
+    subtitle: "1-Year Warranty & Lifetime Support",
+    icon: Sparkles,
+    color: "from-emerald-600 to-green-600",
+    badgeBg: "bg-green-50 text-green-700 border-green-200/60",
+    description:
+      "Collect your perfectly restored smartphone with warranty paperwork, complimentary UV sanitization, and flexible payment options.",
+    keyTakeaway: "Device returned in flawless condition with 12 months peace of mind.",
+    benefits: [
+      {
+        head: "1-Year Hassle-Free Warranty",
+        desc: "Immediate replacement support if any part exhibits manufacturing defect.",
+      },
+      {
+        head: "UV Cleaning & Polish",
+        desc: "Free hygienic deep-clean and oleophobic screen polish with every repair.",
+      },
+      {
+        head: "Digital Invoice & Support",
+        desc: "Instant GST/tax receipt sent straight to your WhatsApp and email.",
+      },
+    ],
+    time: "Instant Handover",
+    warranty: "1-Year Full Coverage",
+  },
 ];

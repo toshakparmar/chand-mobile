@@ -1,13 +1,13 @@
 export const businessConfig = {
-  name: "Chand Mobile",
-  shortName: "CHAND MOBILE",
+  name: "Chand Mobile Expert",
+  shortName: "CHAND MOBILE EXPERT",
   tagline: "Your Phone. Our Expertise.",
   description:
     "Professional smartphone repairs including screen replacement, battery replacement, charging port repair and more. Fast service, quality parts and warranty-backed repairs.",
   phone: "+91 98765 43210",
   phoneRaw: "+919876543210",
   whatsapp: "+919876543210",
-  email: "hello@chandmobile.com",
+  email: "hello@chandmobileexpert.com",
   address: "142 MG Road, Sector 17",
   city: "Your City",
   state: "Punjab",
