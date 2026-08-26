@@ -1,66 +1,92 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { ShieldCheck, Wrench, Receipt, Zap, BadgeCheck, Lock } from "lucide-react";
 import { FadeIn } from "@/components/animations/FadeIn";
-import { StaggerGroup, StaggerItem } from "@/components/animations/ScrollReveal";
-import { MagicCard } from "@/components/animations/MagicCard";
-import { whyUs } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { StaggerGroup, StaggerItem } from "@/components/animations/ScrollReveal";
+import { whyUs } from "@/lib/data";
 
 const icons = [Wrench, BadgeCheck, Receipt, Zap, ShieldCheck, Lock];
 
 export function WhyChooseUs() {
   return (
-    <section id="why-us" className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32 overflow-hidden">
+    <section id="why-us" className="relative mx-auto max-w-7xl px-5 py-12 sm:px-8 sm:py-16 overflow-hidden">
       {/* Background gradients for glassmorphism */}
-      <div className="absolute right-1/4 top-1/4 -z-10 h-[500px] w-[500px] rounded-full bg-blue-400/[0.1] blur-[120px]" />
-      <div className="absolute left-1/4 bottom-0 -z-10 h-[400px] w-[400px] rounded-full bg-emerald-400/[0.08] blur-[120px]" />
+      <motion.div
+        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute right-1/4 top-1/4 -z-10 h-[500px] w-[500px] rounded-full bg-blue-400/[0.1] blur-[120px]"
+      />
+      <motion.div
+        animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.4, 0.2] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        className="absolute left-1/4 bottom-0 -z-10 h-[400px] w-[400px] rounded-full bg-emerald-400/[0.08] blur-[120px]"
+      />
 
-      <div className="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
-        <FadeIn className="relative">
-          <div className="mx-auto w-full max-w-md lg:sticky lg:top-28">
-            <div className="relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-3xl border border-surface-border/60 bg-surface shadow-xl shadow-accent/10 group">
-              <Image
-                src="/images/quality_repair_tools.jpg"
-                alt="High quality professional repair tools"
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, 50vw"
+      <FadeIn className="mb-10 flex flex-col items-start sm:mb-14 max-w-5xl">
+        <div>
+          <Badge variant="outline" className="mb-6 bg-white/60 backdrop-blur-md px-3.5 py-1">
+            <span className="relative flex h-2 w-2 mr-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
+            </span>
+            Why Choose Us
+          </Badge>
+          <h2 className="font-display text-[2.5rem] leading-tight font-bold tracking-tighter text-slate-950 sm:text-5xl lg:text-[3.75rem]">
+            Built on precision,{" "}
+            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 bg-clip-text text-transparent drop-shadow-sm pb-1 inline-block">
+              backed by trust.
+            </span>
+          </h2>
+          <p className="mt-4 max-w-4xl text-[1.125rem] leading-normal text-slate-600 font-medium whitespace-normal lg:whitespace-nowrap">
+            Factory-grade parts, board-level micro-soldering precision, and a certified 1-Year warranty on every repair.
+          </p>
+        </div>
+      </FadeIn>
+
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[3fr_2fr] lg:gap-8">
+        <FadeIn className="relative h-[350px] w-full lg:h-auto">
+          <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[2.5rem] border border-white/60 bg-white/40 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.06)] backdrop-blur-xl group">
+            <div className="h-full w-full overflow-hidden rounded-[2rem] bg-slate-900 shadow-inner relative flex items-center justify-center">
+              {/* Scale iframe to crop out top/bottom UI controls since Sketchfab free tier forces some UI */}
+              <iframe
+                title="Phone Repair Animation"
+                allowFullScreen
+                allow="autoplay; fullscreen; xr-spatial-tracking"
+                src="https://sketchfab.com/models/16f16124a4824551a527e6054b09b87e/embed?autostart=1&transparent=1&ui_theme=dark&ui_infos=0&ui_watermark=0&ui_controls=0&ui_stop=0&ui_animations=0&scrollwheel=0"
+                className="absolute inset-0 h-[120%] w-[110%] -left-[5%] -top-[10%] max-w-none border-0 object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-40" />
+            </div>
 
-              <div className="absolute bottom-6 left-6 rounded-2xl border border-white/40 bg-white/30 px-5 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-xl">
-                <p className="font-display text-[10px] font-bold uppercase tracking-widest text-white/90">Warranty</p>
-                <p className="font-display text-base font-bold text-white">Active — 12 months</p>
-              </div>
+            {/* Floating Glassmorphic Badge */}
+            <div className="absolute bottom-8 left-8 rounded-2xl border border-white/60 bg-white/70 px-5 py-3 shadow-xl backdrop-blur-2xl pointer-events-none transition-transform duration-500 group-hover:-translate-y-2">
+              <p className="font-display text-[10px] font-bold uppercase tracking-widest text-slate-500">Warranty</p>
+              <p className="font-display text-base font-bold text-slate-900">Active — 12 months</p>
             </div>
           </div>
         </FadeIn>
 
         <div>
-          <Badge>SEC.02 — Why Us</Badge>
-          <h2 className="mt-4 text-balance font-display text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
-            Repair done <span className="gradient-text-blue">right.</span>
-          </h2>
-
-          <StaggerGroup className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <StaggerGroup className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {whyUs.map((item, i) => {
               const Icon = icons[i];
               return (
                 <StaggerItem key={item.title} className="h-full">
-                  <MagicCard className="flex h-full flex-row items-start gap-4 p-6 rounded-[2rem] border border-white/60 bg-white/40 shadow-sm backdrop-blur-xl transition-all hover:bg-white/60 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
-                    <span className="mt-0.5 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white shadow-sm text-blue-600">
-                      <Icon className="h-5 w-5" strokeWidth={2} />
-                    </span>
-                    <div>
-                      <h3 className="font-display text-lg font-bold text-slate-800">{item.title}</h3>
-                      <p className="mt-2 text-[15px] leading-relaxed text-slate-500">
+                  <Card className="group flex h-full flex-col items-start p-4">
+                    <CardHeader className="p-0 mb-2">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-indigo-50 shadow-sm text-blue-600 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3">
+                        <Icon className="h-4 w-4" strokeWidth={2.5} />
+                      </span>
+                    </CardHeader>
+                    <CardContent className="p-0">
+                      <CardTitle className="text-[15px]">{item.title}</CardTitle>
+                      <CardDescription className="mt-0.5 text-[12.5px]">
                         {item.description}
-                      </p>
-                    </div>
-                  </MagicCard>
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
                 </StaggerItem>
               );
             })}
