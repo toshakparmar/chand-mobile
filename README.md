@@ -48,9 +48,14 @@ This platform delivers an executive-level digital storefront and diagnostic hub 
 ---
 
 ### 3. 🚀 Performance & Architecture
-- **Non-Blocking 3D Hardware Rendering**: Three.js Canvas dynamically imported via `next/dynamic` (`ssr: false`), ensuring instant 60 FPS HTML/DOM hydration.
-- **Strict Data Scroll Compatibility**: Resolved Next.js router transition warnings with scoped `html[data-scroll-behavior="smooth"]`.
-- **Async Image Optimization**: Native lazy-loading (`loading="lazy"`), async image decoding, and explicit dimensional ratios to eliminate Cumulative Layout Shift (CLS).
+- **Granular Home Section Chunking**: All below-the-fold components (`Services`, `WhyChooseUs`, `RepairProcess`, `RepairEstimator`, `Testimonials`, `FAQ`) are code-split via `next/dynamic` with lightweight placeholder skeletons, minimizing initial bundle size, Total Blocking Time (TBT), and First Contentful Paint (FCP).
+- **Non-Blocking 3D Hardware Chunking**:
+  - Three.js Canvas dynamically loaded on client-side (`ssr: false`).
+  - Primary device model (`iPhone 17 Pro Max`) preloaded on boot; secondary models (`iPad`, `MacBook`) deferred via `requestIdleCallback`.
+  - Memoized scene graph cloning and clamped Device Pixel Ratio (`dpr={[1, 1.5]}`) preventing GPU bottlenecks and layout shifts.
+- **Hardware-Accelerated CSS Ambient Glows**: Replaced continuous JS animation loops (`motion.div`) with hardware-accelerated CSS keyframe animations (`orb-pulse`, `orb-drift`), freeing up main thread execution.
+- **Strict Data Scroll Compatibility**: Scoped `html[data-scroll-behavior="smooth"]` eliminating Next.js route transition scroll warnings.
+- **Async Asset Optimization**: Native lazy-loading (`loading="lazy"`), async image decoding (`decoding="async"`), and iframe lazy-loading across all media elements.
 - **Global Command Search (`Cmd + K` / `Ctrl + K`)**: Comprehensive modal search indexing all device models, repair services, trade-in calculator, and support pages.
 
 ---

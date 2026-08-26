@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ShieldCheck, Wrench, Receipt, Zap, BadgeCheck, Lock } from "lucide-react";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { Badge } from "@/components/ui/badge";
@@ -13,17 +12,9 @@ const icons = [Wrench, BadgeCheck, Receipt, Zap, ShieldCheck, Lock];
 export function WhyChooseUs() {
   return (
     <section id="why-us" className="relative mx-auto max-w-7xl px-5 py-12 sm:px-8 sm:py-16 overflow-hidden">
-      {/* Background gradients for glassmorphism */}
-      <motion.div
-        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute right-1/4 top-1/4 -z-10 h-[500px] w-[500px] rounded-full bg-blue-400/[0.1] blur-[120px]"
-      />
-      <motion.div
-        animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.4, 0.2] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute left-1/4 bottom-0 -z-10 h-[400px] w-[400px] rounded-full bg-emerald-400/[0.08] blur-[120px]"
-      />
+      {/* Background gradients — CSS-only (no JS overhead) */}
+      <div className="absolute right-1/4 top-1/4 -z-10 h-[500px] w-[500px] rounded-full bg-blue-400/[0.1] blur-[120px] animate-[orb-pulse_8s_ease-in-out_infinite]" />
+      <div className="absolute left-1/4 bottom-0 -z-10 h-[400px] w-[400px] rounded-full bg-emerald-400/[0.08] blur-[120px] animate-[orb-pulse_10s_ease-in-out_1s_infinite]" />
 
       <FadeIn className="mb-10 flex flex-col items-start sm:mb-14 max-w-5xl">
         <div>
@@ -53,6 +44,7 @@ export function WhyChooseUs() {
               {/* Scale iframe to crop out top/bottom UI controls since Sketchfab free tier forces some UI */}
               <iframe
                 title="Phone Repair Animation"
+                loading="lazy"
                 allowFullScreen
                 allow="autoplay; fullscreen; xr-spatial-tracking"
                 src="https://sketchfab.com/models/16f16124a4824551a527e6054b09b87e/embed?autostart=1&transparent=1&ui_theme=dark&ui_infos=0&ui_watermark=0&ui_controls=0&ui_stop=0&ui_animations=0&scrollwheel=0"

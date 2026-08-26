@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
 import Autoplay from "embla-carousel-autoplay";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { services } from "@/lib/data";
@@ -17,17 +16,9 @@ import { Badge } from "../ui/badge";
 export function Services() {
   return (
     <section id="services" className="relative mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24 overflow-hidden">
-      {/* Background gradients for glassmorphism */}
-      <motion.div
-        animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.6, 0.4] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-1/4 top-1/4 -z-10 h-[400px] w-[400px] rounded-full bg-blue-300/[0.15] blur-[100px]"
-      />
-      <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute right-1/4 bottom-1/4 -z-10 h-[300px] w-[300px] rounded-full bg-indigo-300/[0.15] blur-[100px]"
-      />
+      {/* Background gradients — CSS-only (no JS overhead) */}
+      <div className="absolute left-1/4 top-1/4 -z-10 h-[400px] w-[400px] rounded-full bg-blue-300/[0.15] blur-[100px] animate-[orb-pulse_8s_ease-in-out_infinite]" />
+      <div className="absolute right-1/4 bottom-1/4 -z-10 h-[300px] w-[300px] rounded-full bg-indigo-300/[0.15] blur-[100px] animate-[orb-pulse_10s_ease-in-out_1s_infinite]" />
 
       <FadeIn className="flex flex-col items-start justify-between md:flex-row md:items-end">
         <div>

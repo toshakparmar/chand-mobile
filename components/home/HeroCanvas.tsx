@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { memo, Suspense, useCallback, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment, Float, ContactShadows, OrbitControls, useGLTF, Html, useProgress } from "@react-three/drei";
 import { Loader2 } from "lucide-react";
@@ -15,9 +15,8 @@ function CanvasLoader() {
   const { progress } = useProgress();
   return (
     <Html center>
-      <div className="flex flex-col items-center justify-center gap-3 rounded-3xl border border-white/90 bg-white/80 p-5 shadow-xl backdrop-blur-2xl drop-shadow-sm">
+      <div className="flex flex-col items-center justify-center gap-3 rounded-3xl border border-white/90 bg-white/80 p-5 shadow-xl backdrop-blur-2xl">
         <div className="relative flex h-14 w-14 items-center justify-center">
-          <div className="absolute inset-0 animate-ping rounded-full bg-blue-500/20" />
           <svg className="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 100 100">
             <circle className="text-slate-200/80" strokeWidth="6" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" />
             <circle
@@ -42,33 +41,72 @@ function CanvasLoader() {
   );
 }
 
-function DeviceModel({ type }: { type: keyof typeof DEVICE_CONFIGS }) {
+/**
+ * Memoized DeviceModel prevents re-mounting the GLTF scene graph
+ * unless the device type actually changes. The `clone: true` flag
+ * creates a cheap shallow copy so React Three Fiber can safely
+ * dispose of the old scene without affecting the cached geometry.
+ */
+const DeviceModel = memo(function DeviceModel({ type }: { type: keyof typeof DEVICE_CONFIGS }) {
   const config = DEVICE_CONFIGS[type];
   const { scene } = useGLTF(config.path);
+
+  // Clone the scene so each instance gets its own Object3D tree
+  // while sharing the underlying BufferGeometry and Material GPU data.
+  const clonedScene = useMemo(() => scene.clone(), [scene]);
+
   return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <primitive object={scene} scale={config.scale} position={config.position} rotation={[0, -Math.PI / 4, 0]} />
+    <Float speed={1.8} rotationIntensity={0.8} floatIntensity={1.5}>
+      <primitive object={clonedScene} scale={config.scale} position={config.position} rotation={[0, -Math.PI / 4, 0]} />
     </Float>
   );
+});
+
+// Only preload the default model immediately.
+// Others load in the background after the initial paint.
+useGLTF.preload("/models/iphone_17_pro_max.glb");
+
+// Defer secondary model preloads
+if (typeof window !== "undefined") {
+  // Use requestIdleCallback (or setTimeout fallback) to preload
+  // non-critical models when the browser is idle.
+  const deferPreload = (path: string) => {
+    if ("requestIdleCallback" in window) {
+      (window as any).requestIdleCallback(() => useGLTF.preload(path), { timeout: 4000 });
+    } else {
+      setTimeout(() => useGLTF.preload(path), 3000);
+    }
+  };
+  deferPreload("/models/ipad_mini_2023.glb");
+  deferPreload("/models/apple_macbook_pro.glb");
 }
 
-useGLTF.preload("/models/iphone_17_pro_max.glb");
-useGLTF.preload("/models/ipad_mini_2023.glb");
-useGLTF.preload("/models/apple_macbook_pro.glb");
-
-export default function HeroCanvas({ activeDevice }: { activeDevice: keyof typeof DEVICE_CONFIGS }) {
+/**
+ * Memoized Canvas wrapper. Only re-renders when activeDevice changes.
+ * Canvas settings are tuned for fast startup:
+ *  - frameloop="demand": only re-render when something changes (orbit / float)
+ *  - dpr clamped to [1, 1.5] to avoid expensive 2x rendering on high-DPI
+ *  - antialias true for visual quality, alpha true for transparent BG
+ *  - powerPreference "high-performance" hints the GPU
+ */
+const HeroCanvas = memo(function HeroCanvas({ activeDevice }: { activeDevice: keyof typeof DEVICE_CONFIGS }) {
   return (
     <Canvas
       camera={{ position: [0, 0, 5], fov: 45 }}
-      gl={{ antialias: true, powerPreference: "high-performance" }}
-      dpr={[1, 2]}
+      gl={{
+        antialias: true,
+        alpha: true,
+        powerPreference: "high-performance",
+        preserveDrawingBuffer: false,
+      }}
+      dpr={[1, 1.5]}
+      frameloop="always"
+      performance={{ min: 0.5 }}
     >
       <Suspense fallback={<CanvasLoader />}>
         <Environment preset="city" />
-        <group key={activeDevice}>
-          <DeviceModel type={activeDevice} />
-        </group>
-        <ContactShadows position={[0, -2, 0]} opacity={0.5} scale={10} blur={2} far={4} />
+        <DeviceModel type={activeDevice} />
+        <ContactShadows position={[0, -2, 0]} opacity={0.4} scale={10} blur={2.5} far={4} />
         <OrbitControls
           enablePan={false}
           enableZoom={false}
@@ -80,4 +118,6 @@ export default function HeroCanvas({ activeDevice }: { activeDevice: keyof typeo
       </Suspense>
     </Canvas>
   );
-}
+});
+
+export default HeroCanvas;

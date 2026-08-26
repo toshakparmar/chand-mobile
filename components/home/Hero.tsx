@@ -58,22 +58,10 @@ export function Hero() {
         className="opacity-[0.15] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,_black_40%,_transparent_100%)]"
       />
 
-      {/* Gradient orbs for Glassmorphism backgrounds */}
-      <motion.div
-        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-[5%] top-[-5%] -z-10 h-[600px] w-[600px] rounded-full bg-blue-500/30 blur-[120px]"
-      />
-      <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute right-[5%] top-[15%] -z-10 h-[500px] w-[500px] rounded-full bg-emerald-500/20 blur-[120px]"
-      />
-      <motion.div
-        animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.4, 0.2], x: [0, 20, 0], y: [0, -40, 0] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[10%] left-[40%] -z-10 h-[400px] w-[400px] rounded-full bg-indigo-500/20 blur-[120px]"
-      />
+      {/* Gradient orbs — CSS-only animations (no JS overhead) */}
+      <div className="absolute left-[5%] top-[-5%] -z-10 h-[600px] w-[600px] rounded-full bg-blue-500/30 blur-[120px] animate-[orb-pulse_8s_ease-in-out_infinite]" />
+      <div className="absolute right-[5%] top-[15%] -z-10 h-[500px] w-[500px] rounded-full bg-emerald-500/20 blur-[120px] animate-[orb-pulse_10s_ease-in-out_1s_infinite]" />
+      <div className="absolute bottom-[10%] left-[40%] -z-10 h-[400px] w-[400px] rounded-full bg-indigo-500/20 blur-[120px] animate-[orb-drift_18s_ease-in-out_infinite]" />
 
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-5 sm:px-8 lg:grid-cols-2">
         {/* Left — copy */}

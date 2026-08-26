@@ -83,6 +83,17 @@
   to { transform: rotate(360deg); }
 }
 
+/* GPU-accelerated orb animations (replaces JS-driven motion.div loops) */
+@keyframes orb-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.12); opacity: 0.5; }
+}
+
+@keyframes orb-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+  50% { transform: translate(20px, -40px) scale(1.15); opacity: 0.4; }
+}
+
 /* ── Animation Utilities ───────────────────────────────── */
 
 .animate-scan { animation: scan 2.4s linear infinite; }

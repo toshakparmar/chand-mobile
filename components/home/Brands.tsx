@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { Marquee } from "@/components/animations/Marquee";
 import { Badge } from "@/components/ui/badge";
@@ -9,12 +8,8 @@ import { brands } from "@/lib/data";
 export function Brands() {
   return (
     <section className="relative overflow-hidden border-y border-slate-200/50 py-12">
-      {/* Background gradients for glassmorphism */}
-      <motion.div
-        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-1/2 top-1/2 -z-10 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-300/[0.1] blur-[100px]"
-      />
+      {/* Background gradient — CSS-only (no JS overhead) */}
+      <div className="absolute left-1/2 top-1/2 -z-10 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-300/[0.1] blur-[100px] animate-[orb-pulse_8s_ease-in-out_infinite]" />
 
       <FadeIn className="mx-auto flex max-w-7xl flex-col items-center justify-center px-5 text-center sm:px-8">
         <Badge variant="outline" className="mb-6 bg-white/60 backdrop-blur-md px-3.5 py-1">
